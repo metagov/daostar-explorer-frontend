@@ -1,27 +1,43 @@
-# daostar-explorer-frontend
+# DAOStar DAOIP-3 Explorer
 
-Next.js ships with [styled-jsx](https://github.com/vercel/styled-jsx) allowing you to write scoped styled components with full CSS support. This is important for the modularity and code size of your bundles and also for the learning curve of the framework. If you know CSS you can write `styled-jsx` right away.
+DAOIP-3 defines a standard for contribution and attestations in DAOs and web3
+communities. You can read about the standard [here][daoip-3].
 
-## Deploy your own
+This is the frontend for an explorer application which allows you to view and
+navigate through any address to see the contributions they've done.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-styled-jsx)
+## Development
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-styled-jsx&project-name=with-styled-jsx&repository-name=with-styled-jsx)
+First clone the repo and run the setup:
 
-## How to use
+```sh
+$ git clone git@github.com:metagov/daostar-explorer-frontend.git
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-styled-jsx with-styled-jsx-app
+$ cd daostar-explorer-frontend
 ```
 
-```bash
-yarn create next-app --example with-styled-jsx with-styled-jsx-app
+This repo makes use of (and it's highly recommend using) [`asdf`][asdf-vm] to manage language and tool versions.
+
+Make sure you have it installed and then run the setup:
+
+```sh
+$ bin/setup
 ```
 
-```bash
-pnpm create next-app --example with-styled-jsx with-styled-jsx-app
+To start the development server:
+
+```sh
+$ bin/server
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+That's it! You're ready to go.
+
+Before submitting any code, make sure it conforms to the standards by running
+the linters:
+
+```sh
+$ bin/lint
+```
+
+[asdf-vm]: https://asdf-vm.com/
+[daoip-3]: https://github.com/metagov/daostar/blob/main/DAOIPs/daoip-3.md

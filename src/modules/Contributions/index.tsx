@@ -151,7 +151,7 @@ export default function Contributions(props: ContributionsProps) {
       setErrors([{ status: 401, message: "Invalid address" }]);
       setIsFetching(false);
     }
-  }, []);
+  }, [address]);
 
   return (
     <CenteredLayout>

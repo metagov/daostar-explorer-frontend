@@ -26,19 +26,7 @@
     "import",
     "import-alias",
     "react",
-    "react-hooks",
-    "testing-library",
-    "lodash"
-  ],
-  "overrides": [
-    // Only uses Testing Library lint rules in test files
-    {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
-    }
+    "react-hooks"
   ],
   "rules": {
     "no-restricted-imports": [
@@ -62,7 +50,6 @@
         ]
       }
     ],
-    "lodash/import-scope": [2, "method"],
     "prettier/prettier": "error",
     "import/no-unresolved": "off",
     "no-console": "error",
