@@ -29,13 +29,13 @@ const StyledIcon = styled(
       },
     },
   },
-  "Icon"
+  "Icon",
 );
 
 const Icon = forwardRef<HTMLDivElement, IconProps>(
   (
     { children, size = "regular", rotate, color, css, ...props }: IconProps,
-    ref
+    ref,
   ) => (
     <StyledIcon
       ref={ref}
@@ -46,7 +46,7 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
     >
       {children}
     </StyledIcon>
-  )
+  ),
 );
 
 Icon.defaultProps = {

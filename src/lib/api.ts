@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:4000";
+const { API_BASE_URL = "http://localhost:4000" } = process.env;
 
 export type APIResponseData = {
   data: object;
@@ -12,7 +12,7 @@ export type APIResponseError = {
 export type APIResponse = {
   data: APIResponseData | null;
   errors: APIResponseError[] | null;
-}
+};
 
 const error = async (response: Response) => {
   return {
@@ -20,10 +20,10 @@ const error = async (response: Response) => {
     errors: [
       {
         status: response.status,
-        message: await response.text()
+        message: await response.text(),
       },
-    ]
-  }
+    ],
+  };
 };
 
 const data = async (response: Response) => {
