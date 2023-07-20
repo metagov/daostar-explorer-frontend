@@ -21,6 +21,7 @@ interface LinkProps extends Omit<ComponentPropsWithoutRef<"a">, "href"> {
 const StyledLink = styled(
   "span",
   {
+    color: "inherit",
     textDecoration: "none",
     position: "relative",
     cursor: "pointer",

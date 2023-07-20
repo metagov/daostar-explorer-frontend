@@ -51,6 +51,7 @@ const stitchesInstance = createStitches({
       30: "30px",
       16: "16px",
       8: "8px",
+      4: "4px",
     },
     sizes: {
       headerHeight: "108px",

@@ -15,13 +15,14 @@ import AddressSearch from "~/components/shared/AddressSearch";
 import ContributionCard from "~/components/shared/ContributionCard";
 import ReputationCard from "~/components/shared/ReputationCard";
 import Box from "~/components/ui/Box";
+import { Regular, Title } from "~/components/ui/Typography";
 
-interface ContributionsProps {
+interface ProfileProps {
   address: string;
 }
 
-interface HeaderProps {
-  address: string;
+interface SectionContent {
+  data: Contribution[];
   isFetching: boolean;
   errors: APIResponseError[] | null;
 }
@@ -38,59 +39,16 @@ const HeaderWrapper = styled(Box, {
   gap: "$16",
 });
 
-const HeaderTitle = styled("h1", {
-  fontSize: "$42",
-  fontWeight: "$bold",
-});
-
-const HeaderContent = styled("p", {
-  fontSize: "$16",
-});
-
-const getHeaderContent = (
+const sectionContentWithoutData = (
   isFetching: boolean,
   errors: APIResponseError[] | null,
-  address: string,
 ) => {
-  if (isFetching) return "Fetching...";
-  if (errors) return errors.map((e) => e.message).join("\n");
-  if (!address) return null;
+  if (isFetching) return <Regular>Fetching...</Regular>;
+  if (errors)
+    return <Regular>{errors.map((e) => e.message).join("\n")}</Regular>;
 
-  return (
-    <>
-      <strong>Address: </strong>
-      {address}
-    </>
-  );
+  return null;
 };
-
-const ContributionsHeader = ({ isFetching, address, errors }: HeaderProps) => {
-  return (
-    <HeaderWrapper>
-      <HeaderTitle>Contributions</HeaderTitle>
-      <HeaderContent>
-        {getHeaderContent(isFetching, errors, address)}
-      </HeaderContent>
-    </HeaderWrapper>
-  );
-};
-
-const ReputationHeader = ({ isFetching, errors }: HeaderProps) => {
-  if (isFetching || errors) return null;
-
-  return (
-    <HeaderWrapper>
-      <HeaderTitle>Reputation</HeaderTitle>
-    </HeaderWrapper>
-  );
-};
-
-const CardListWrapper = styled(Box, {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  gap: "$42 $16",
-});
 
 const ReputationList = () => {
   return (
@@ -110,6 +68,41 @@ const ContributionList = ({ contributions }: ContributionListProps) => {
   );
 };
 
+const ContributionSection = ({ isFetching, errors, data }: SectionContent) => {
+  return (
+    <HeaderWrapper>
+      <Title>Profile</Title>
+      {sectionContentWithoutData(isFetching, errors) || (
+        <ContributionList contributions={data} />
+      )}
+    </HeaderWrapper>
+  );
+};
+
+const ReputationSection = ({ isFetching, errors }: SectionContent) => {
+  return (
+    <HeaderWrapper>
+      <Title>Reputation</Title>
+      {sectionContentWithoutData(isFetching, errors) || <ReputationList />}
+    </HeaderWrapper>
+  );
+};
+
+const Address = ({ address }: { address: string }) => (
+  <p>
+    <strong>
+      Address: <Regular>{address}</Regular>
+    </strong>
+  </p>
+);
+
+const CardListWrapper = styled(Box, {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  gap: "$42 $16",
+});
+
 const LayoutContainer = styled(Box, {
   display: "flex",
   flexDirection: "column",
@@ -124,7 +117,7 @@ const ContentContainer = styled(Box, {
   fontFamily: "$IBMPlexSans",
 });
 
-export default function Contributions(props: ContributionsProps) {
+export default function Profile(props: ProfileProps) {
   const { address } = props;
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [isFetching, setIsFetching] = useState(true);
@@ -158,25 +151,26 @@ export default function Contributions(props: ContributionsProps) {
       <LayoutContainer>
         <AddressSearch />
         <ContentContainer>
-          <ReputationHeader
+          <Address address={address} />
+
+          <ReputationSection
+            data={[]}
             isFetching={isFetching}
             errors={errors}
-            address={address}
           />
-          {!isFetching && <ReputationList />}
-          <ContributionsHeader
+
+          <ContributionSection
+            data={contributions}
             isFetching={isFetching}
-            address={address}
             errors={errors}
           />
-          {!isFetching && <ContributionList contributions={contributions} />}
         </ContentContainer>
       </LayoutContainer>
     </CenteredLayout>
   );
 }
 
-Contributions.getInitialProps = async (ctx: NextPageContext) => {
+Profile.getInitialProps = async (ctx: NextPageContext) => {
   const { address } = ctx.query;
 
   return {

@@ -18,12 +18,23 @@ const Button = styled(
     variants: {
       rounded: {
         true: {
-          borderRadius: "large",
+          borderRadius: "$large",
         },
       },
       filled: {
         true: {
           background: "rgba(248, 228, 65, 0.40)",
+        },
+      },
+      disabled: {
+        true: {
+          opacity: "0.5",
+
+          "&:hover": {
+            cursor: "not-allowed",
+            background: "transparent",
+            transition: "none",
+          },
         },
       },
     },

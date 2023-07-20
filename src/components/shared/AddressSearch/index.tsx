@@ -5,7 +5,7 @@ import { styled } from "~/styles/stitches.config";
 
 import Box from "~/components/ui/Box";
 import Button from "~/components/ui/Button";
-import Search from "~/components/ui/Search";
+import TextInput from "~/components/ui/TextInput";
 
 const Container = styled(Box, {
   width: "100%",
@@ -32,7 +32,7 @@ export default function AddressSearch() {
 
   return (
     <Container>
-      <Search
+      <TextInput
         placeholder="Search any address..."
         onChange={setAddressFromInput}
         onKeyUp={submitAddress}

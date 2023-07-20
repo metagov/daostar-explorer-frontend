@@ -1,1 +1,1 @@
-export { default } from "~/modules/Contributions";
+export { default } from "~/modules/Profile";

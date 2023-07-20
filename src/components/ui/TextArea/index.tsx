@@ -3,15 +3,15 @@ import { styled } from "~/styles/stitches.config";
 
 interface Props {
   placeholder?: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onKeyUp?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
 }
 
-const SearchInput = styled(
-  "input",
+const TextAreaStyled = styled(
+  "textarea",
   {
     width: "100%",
-    height: "40px",
+    minHeight: "80px",
     padding: "$8",
     border: "1px solid $gray200",
     borderRadius: "$small",
@@ -25,13 +25,12 @@ const SearchInput = styled(
       border: "1px solid $gray100",
     },
   },
-  "SearchInput",
+  "TextArea",
 );
 
-export default function Search({ placeholder, onChange, onKeyUp }: Props) {
+export default function TextArea({ placeholder, onChange, onKeyUp }: Props) {
   return (
-    <SearchInput
-      type="text"
+    <TextAreaStyled
       placeholder={placeholder}
       onChange={onChange}
       onKeyUp={onKeyUp}
