@@ -1,8 +1,11 @@
 import { styled } from "~/styles/stitches.config";
 
+import type { ContributionStatus } from "~/lib/types";
+
 import Box from "~/components/ui/Box";
 
-const CARD_MAX_WIDTH = "217px";
+const VERTICAL_CARD_WIDTH = "217px";
+const HORIZONTAL_CARD_WIDTH = "294px";
 
 const Gradients = [
   "conic-gradient(from 90deg at 50% 50%, #55E3C1 0deg, #BD7070 151.87deg, #7A55E3 225deg, #0E012B 359.94deg, #55E3C1 360deg);",
@@ -21,7 +24,27 @@ interface Props {
   title: string;
   content: string;
   style?: StyleVariant;
+  status: ContributionStatus;
 }
+
+const LabelColors = {
+  imported: {
+    hex: "$blue",
+    rgba: (alpha = 1) => `rgba(66, 142, 255, ${alpha})`,
+  },
+  minted: {
+    hex: "$green",
+    rgba: (alpha = 1) => `rgba(0, 168, 150, ${alpha})`,
+  },
+  minting: {
+    hex: "$purple",
+    rgba: (alpha = 1) => `rgba(105, 53, 170, ${alpha})`,
+  },
+  unminted: {
+    hex: "$gray200",
+    rgba: (alpha = 1) => `rgba(78, 78, 78, ${alpha})`,
+  },
+};
 
 const BaseGradient = styled(
   "div",
@@ -103,14 +126,14 @@ const Card = styled(
     backgroundColor: "$gray50",
     boxShadow: "$highLight",
     color: "$gray400",
-    maxWidth: CARD_MAX_WIDTH,
+    width: VERTICAL_CARD_WIDTH,
 
     variants: {
       style: {
         alternative: {
           flexDirection: "row",
           gap: "$16",
-          maxWidth: "294px",
+          width: HORIZONTAL_CARD_WIDTH,
           alignItems: "center",
           justifyContent: "center",
         },
@@ -119,6 +142,30 @@ const Card = styled(
   },
   "Card",
 );
+
+const LabelContainer = styled(Box, {
+  display: "flex",
+  width: "min-content",
+  padding: "$4",
+  borderRadius: "$medium",
+});
+
+const LabelContent = styled("span", {
+  fontSize: "$8",
+  fontWeight: "$bold",
+  textTransform: "capitalize",
+});
+
+const Label = ({ status }: { status: Status }) => {
+  const color = LabelColors[status]["hex"];
+  const backgroundColor = LabelColors[status]["rgba"](0.3);
+
+  return (
+    <LabelContainer css={{ color, backgroundColor }}>
+      <LabelContent css={{ color }}>{status}</LabelContent>
+    </LabelContainer>
+  );
+};
 
 const TextWrapper = styled(Box, {
   display: "flex",
@@ -136,7 +183,13 @@ const Content = styled("p", {
   fontSize: "$12",
 });
 
-export default function ActivityCard({ seed, title, content, style }: Props) {
+export default function ActivityCard({
+  seed,
+  title,
+  content,
+  style,
+  status,
+}: Props) {
   return (
     <Card style={style}>
       <CardSpotlight style={style}>
@@ -146,6 +199,7 @@ export default function ActivityCard({ seed, title, content, style }: Props) {
       </CardSpotlight>
       <TextWrapper>
         <Title>{title}</Title>
+        <Label status={status} />
         <Content>{content}</Content>
       </TextWrapper>
     </Card>

@@ -5,9 +5,11 @@ export default function ReputationCard() {
   const title = "Reputable Score";
   const content = "10/10 - Based on 10 reviews";
   const seed = BigInt(1000);
+  const status = "imported";
 
   return (
     <ActivityCard
+      status={status}
       title={title}
       content={content}
       seed={seed}

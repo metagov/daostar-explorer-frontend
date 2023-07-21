@@ -1,3 +1,5 @@
+export type ContributionStatus = "unminted" | "minting" | "minted" | "imported";
+
 export type Contribution = {
   id: string;
   issuer: string;
@@ -12,4 +14,5 @@ export type Contribution = {
   contributor_signatures: string[];
   metadata: object;
   metadata_uri: string;
+  status: ContributionStatus;
 };

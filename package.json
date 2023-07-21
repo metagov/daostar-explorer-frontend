@@ -8,7 +8,9 @@
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@metamask/providers": "^11.1.0",
     "@stitches/react": "^1.2.8",
+    "ethers": "^6.6.4",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -5,6 +5,7 @@ interface Props {
   placeholder?: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyUp?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
+  disabled?: boolean;
 }
 
 const TextAreaStyled = styled(
@@ -28,12 +29,18 @@ const TextAreaStyled = styled(
   "TextArea",
 );
 
-export default function TextArea({ placeholder, onChange, onKeyUp }: Props) {
+export default function TextArea({
+  placeholder,
+  onChange,
+  onKeyUp,
+  disabled,
+}: Props) {
   return (
     <TextAreaStyled
       placeholder={placeholder}
       onChange={onChange}
       onKeyUp={onKeyUp}
+      disabled={disabled}
     />
   );
 }

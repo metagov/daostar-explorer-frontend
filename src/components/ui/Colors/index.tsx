@@ -10,6 +10,8 @@ const colors = {
 
   blue: "#428EFF",
 
+  green: "#00A896",
+
   purple: "#6935AA",
 };
 

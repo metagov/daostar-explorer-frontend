@@ -1,40 +1,47 @@
-const { API_BASE_URL = "http://localhost:4000" } = process.env;
+import { api } from "~/lib/config";
+import { get, post, put } from "~/lib/client";
 
-export type APIResponseData = {
-  data: object;
+export type ContributionInput = {
+  title: string;
+  description?: string;
+  category?: string;
+  dateOfEngagement: string;
+  external?: object;
 };
 
-export type APIResponseError = {
-  status: number;
-  message: string;
+export type UpdateContributionInput = {
+  txHash: string;
+  issuerUid: string;
 };
 
-export type APIResponse = {
-  data: APIResponseData | null;
-  errors: APIResponseError[] | null;
+export const getContributions = (ethAddress: string) => {
+  return get(`${api.url}/${ethAddress}`);
 };
 
-const error = async (response: Response) => {
-  return {
-    data: null,
-    errors: [
-      {
-        status: response.status,
-        message: await response.text(),
-      },
-    ],
-  };
+export const createContribution = (
+  signature: string,
+  contribution: ContributionInput,
+) => {
+  return post(`${api.url}/contributions`, {
+    signature,
+    contribution: {
+      date_of_engagement: contribution.dateOfEngagement,
+      ...contribution,
+    },
+  });
 };
 
-const data = async (response: Response) => {
-  return {
-    data: await response.json(),
-    errors: null,
-  };
-};
-
-export const getContributions = async (ethAddress: string) => {
-  const res = await fetch(`${API_BASE_URL}/${ethAddress}`);
-
-  return res.ok ? data(res) : error(res);
+export const updateContribution = (
+  id: number,
+  signature: string,
+  params: UpdateContributionInput,
+) => {
+  return put(`${api.url}/contributions`, {
+    id,
+    signature,
+    contribution: {
+      tx_hash: params.txHash,
+      issuer_uid: params.issuerUid,
+    },
+  });
 };

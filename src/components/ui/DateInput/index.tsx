@@ -3,6 +3,7 @@ import { styled } from "~/styles/stitches.config";
 
 interface Props {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 const DateInputStyled = styled(
@@ -26,6 +27,8 @@ const DateInputStyled = styled(
   "DateInput",
 );
 
-export default function DateInput({ onChange }: Props) {
-  return <DateInputStyled type="date" onChange={onChange} />;
+export default function DateInput({ onChange, disabled }: Props) {
+  return (
+    <DateInputStyled type="date" onChange={onChange} disabled={disabled} />
+  );
 }

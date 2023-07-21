@@ -5,6 +5,7 @@ interface Props {
   placeholder?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 const TextInputStyled = styled(
@@ -28,13 +29,19 @@ const TextInputStyled = styled(
   "TextInput",
 );
 
-export default function TextInput({ placeholder, onChange, onKeyUp }: Props) {
+export default function TextInput({
+  placeholder,
+  onChange,
+  onKeyUp,
+  disabled,
+}: Props) {
   return (
     <TextInputStyled
       type="text"
       placeholder={placeholder}
       onChange={onChange}
       onKeyUp={onKeyUp}
+      disabled={disabled}
     />
   );
 }

@@ -11,6 +11,12 @@ export const Title = styled("span", {
   fontSize: "$42",
 });
 
+export const Large = styled("span", {
+  ...typographyBase,
+  fontWeight: "$regular",
+  fontSize: "$30",
+});
+
 export const Regular = styled("span", {
   ...typographyBase,
   fontWeight: "$regular",

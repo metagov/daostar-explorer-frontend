@@ -5,6 +5,7 @@ import InputLabel from "~/components/ui/InputLabel";
 
 interface Props {
   placeholder?: string;
+  disabled?: boolean;
   min?: number;
   max?: number;
   onChange?: (event: ChangeEvent<HTMLInputElement>, error: string) => void;
@@ -52,6 +53,7 @@ const Layout = styled("div", {
 
 export default function NumberInput({
   placeholder,
+  disabled,
   min,
   max,
   onChange,
@@ -95,6 +97,7 @@ export default function NumberInput({
         onChange={wrappedOnChange}
         onKeyUp={wrappedOnKeyUp}
         error={!!error}
+        disabled={disabled}
       />
       <InputLabel error={!!error}>{error}</InputLabel>
     </Layout>
