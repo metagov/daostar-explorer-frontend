@@ -8,6 +8,7 @@ const {
   REPUTABLE_NETWORK,
   REPUTABLE_CONTRACT_ADDRESS,
   WALLET_POLLING_INTERVAL,
+  REPUTABLE_SUBMISSION_ENABLED,
 } = process.env;
 
 const DEFAULT_GOVRN_NETWORK = "goerli";
@@ -17,6 +18,7 @@ const DEFAULT_GOVRN_CONTRACT_ADDRESS =
 const DEFAULT_REPUTABLE_CONTRACT_ADDRESS = "0x0";
 const DEFAULT_API_URL = "http://localhost:4000";
 const DEFAULT_WALLET_POLLING_INTERVAL = 5000;
+const DEFAULT_REPUTABLE_SUBMISSION_ENABLED = false;
 
 const networkChainIds = {
   mainnet: 1,
@@ -39,11 +41,16 @@ export type WalletConfig = {
   pollingInterval: number;
 };
 
+export type FeatureFlagsConfig = {
+  reputableSubmissionEnabled: boolean;
+};
+
 export type ApplicationConfig = {
   govrn: ContractConfig;
   reputable: ContractConfig;
   api: APIConfig;
   wallet: WalletConfig;
+  featureFlags: FeatureFlagsConfig;
 };
 
 export const govrn: ContractConfig = {
@@ -62,6 +69,12 @@ export const api: APIConfig = {
   url: API_URL || DEFAULT_API_URL,
 };
 
+export const featureFlags: FeatureFlagsConfig = {
+  reputableSubmissionEnabled:
+    REPUTABLE_SUBMISSION_ENABLED === "1" ||
+    DEFAULT_REPUTABLE_SUBMISSION_ENABLED,
+};
+
 export const wallet: WalletConfig = {
   pollingInterval: WALLET_POLLING_INTERVAL
     ? Number(WALLET_POLLING_INTERVAL)
@@ -73,6 +86,7 @@ const Config = {
   reputable,
   api,
   wallet,
+  featureFlags,
 };
 
 export default Config;

@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { styled } from "~/styles/stitches.config";
 
+import { featureFlags } from "~/lib/config";
+
 import Icon from "~/components/ui/Icon";
 import Link from "~/components/ui/Link";
 import { Regular } from "~/components/ui/Typography";
@@ -79,9 +81,11 @@ export default function Navbar() {
         <NavbarLink href="/contributions/new">
           <Regular>Submit Contribution</Regular>
         </NavbarLink>
-        <NavbarLink href="/reputation/new">
-          <Regular>Submit Reputation</Regular>
-        </NavbarLink>
+        {featureFlags.reputableSubmissionEnabled && (
+          <NavbarLink href="/reputation/new">
+            <Regular>Submit Reputation</Regular>
+          </NavbarLink>
+        )}
       </NavbarSection>
     </NavbarRoot>
   );
