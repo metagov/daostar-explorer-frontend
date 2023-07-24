@@ -16,3 +16,15 @@ export type Contribution = {
   metadata_uri: string;
   status: ContributionStatus;
 };
+
+export type Reputation = {
+  id: string;
+  issuer: string;
+  issuer_uid: string;
+  issuer_uri: string;
+  version: string;
+  score: number;
+  proof: string;
+  expiration: string;
+};
+

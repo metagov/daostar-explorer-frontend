@@ -14,7 +14,7 @@ export type UpdateContributionInput = {
   issuerUid: string;
 };
 
-export const getContributions = (ethAddress: string) => {
+export const getActivity = (ethAddress: string) => {
   return get(`${api.url}/${ethAddress}`);
 };
 

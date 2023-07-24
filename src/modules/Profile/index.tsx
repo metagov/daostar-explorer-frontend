@@ -3,9 +3,10 @@ import { GetServerSidePropsContext } from "next/types";
 import { useEffect, useState } from "react";
 import { isAddress } from "web3-validator";
 
-import { getContributions, APIResponseError } from "~/lib/api";
+import { getActivity } from "~/lib/api";
+import type { APIResponseError } from "~/lib/client";
 
-import type { Contribution } from "~/lib/types";
+import type { Contribution, Reputation } from "~/lib/types";
 
 import { styled } from "~/styles/stitches.config";
 
@@ -22,13 +23,17 @@ interface ProfileProps {
 }
 
 interface SectionContent {
-  data: Contribution[];
+  data: Contribution[] | Reputation[];
   isFetching: boolean;
   errors: APIResponseError[] | null;
 }
 
 interface ContributionListProps {
   contributions: Contribution[];
+}
+
+interface ReputationListProps {
+  reputation: Reputation[];
 }
 
 const HeaderWrapper = styled(Box, {
@@ -50,22 +55,26 @@ const sectionContentWithoutData = (
   return null;
 };
 
-const ReputationList = () => {
-  return (
-    <CardListWrapper>
-      <ReputationCard />
-    </CardListWrapper>
-  );
+const ReputationList = ({ reputation }: ReputationListProps) => {
+  const content =
+    reputation.length === 0 ? (
+      <Regular>No reputation yet.</Regular>
+    ) : (
+      reputation.map((r) => <ReputationCard key={r.id} {...r} />)
+    );
+
+  return <CardListWrapper>{content}</CardListWrapper>;
 };
 
 const ContributionList = ({ contributions }: ContributionListProps) => {
-  return (
-    <CardListWrapper>
-      {contributions.map((c) => (
-        <ContributionCard key={c.id} {...c} />
-      ))}
-    </CardListWrapper>
-  );
+  const content =
+    contributions.length === 0 ? (
+      <Regular>No contributions yet.</Regular>
+    ) : (
+      contributions.map((c) => <ContributionCard key={c.id} {...c} />)
+    );
+
+  return <CardListWrapper>{content}</CardListWrapper>;
 };
 
 const ContributionSection = ({ isFetching, errors, data }: SectionContent) => {
@@ -73,17 +82,19 @@ const ContributionSection = ({ isFetching, errors, data }: SectionContent) => {
     <HeaderWrapper>
       <Title>Profile</Title>
       {sectionContentWithoutData(isFetching, errors) || (
-        <ContributionList contributions={data} />
+        <ContributionList contributions={data as Contribution[]} />
       )}
     </HeaderWrapper>
   );
 };
 
-const ReputationSection = ({ isFetching, errors }: SectionContent) => {
+const ReputationSection = ({ isFetching, errors, data }: SectionContent) => {
   return (
     <HeaderWrapper>
       <Title>Reputation</Title>
-      {sectionContentWithoutData(isFetching, errors) || <ReputationList />}
+      {sectionContentWithoutData(isFetching, errors) || (
+        <ReputationList reputation={data as Reputation[]} />
+      )}
     </HeaderWrapper>
   );
 };
@@ -120,15 +131,17 @@ const ContentContainer = styled(Box, {
 export default function Profile(props: ProfileProps) {
   const { address } = props;
   const [contributions, setContributions] = useState<Contribution[]>([]);
+  const [reputation, setReputation] = useState<Reputation[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [errors, setErrors] = useState<APIResponseError[] | null>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, errors } = await getContributions(address);
+      const { data, errors } = await getActivity(address);
 
       if (data) {
-        setContributions(data.data);
+        setContributions(data.data.contributions);
+        setReputation(data.data.reputation);
       }
 
       if (errors) {
@@ -154,7 +167,7 @@ export default function Profile(props: ProfileProps) {
           <Address address={address} />
 
           <ReputationSection
-            data={[]}
+            data={reputation}
             isFetching={isFetching}
             errors={errors}
           />

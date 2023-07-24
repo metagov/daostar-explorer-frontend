@@ -1,18 +1,31 @@
-import ActivityCard from "~/components/shared/ActivityCard";
+import type { Reputation } from "~/lib/types";
 
-export default function ReputationCard() {
-  // TODO: Remove hard-coded data
-  const title = "Reputable Score";
-  const content = "10/10 - Based on 10 reviews";
-  const seed = BigInt(1000);
-  const status = "imported";
+import { toEpoch } from "~/lib/date";
+
+import ActivityCard, { LabelColor } from "~/components/shared/ActivityCard";
+
+export default function ReputationCard({
+  id,
+  issuer,
+  score,
+  expiration,
+}: Reputation) {
+  const title = `${issuer} Score`;
+  const content = `Aggregate Reputation Score: ${score}`;
+  const seed = BigInt(id);
+  const now = new Date();
+  const isExpired = toEpoch(now) - toEpoch(expiration) > 0;
+
+  const label = isExpired
+    ? { color: "gray" as LabelColor, content: "expired" }
+    : { color: "green" as LabelColor, content: "active" };
 
   return (
     <ActivityCard
-      status={status}
       title={title}
       content={content}
       seed={seed}
+      label={label}
       style="alternative"
     />
   );

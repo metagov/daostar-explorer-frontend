@@ -1,7 +1,5 @@
 import { styled } from "~/styles/stitches.config";
 
-import type { ContributionStatus } from "~/lib/types";
-
 import Box from "~/components/ui/Box";
 
 const VERTICAL_CARD_WIDTH = "217px";
@@ -17,30 +15,36 @@ const Gradients = [
   "conic-gradient(from 90deg at 50% 50%, #55E36C 0deg, #2B10CF 151.87deg, #170A1C 225deg, #1A0051 359.94deg, #55E36C 360deg);",
 ];
 
-type StyleVariant = "alternative" | null;
+export type StyleVariant = "alternative" | null;
+export type LabelColor = "blue" | "green" | "purple" | "gray";
+
+export type Label = {
+  color: LabelColor;
+  content: string;
+};
 
 interface Props {
   seed: bigint;
   title: string;
   content: string;
   style?: StyleVariant;
-  status: ContributionStatus;
+  label?: Label;
 }
 
 const LabelColors = {
-  imported: {
+  blue: {
     hex: "$blue",
     rgba: (alpha = 1) => `rgba(66, 142, 255, ${alpha})`,
   },
-  minted: {
+  green: {
     hex: "$green",
     rgba: (alpha = 1) => `rgba(0, 168, 150, ${alpha})`,
   },
-  minting: {
+  purple: {
     hex: "$purple",
     rgba: (alpha = 1) => `rgba(105, 53, 170, ${alpha})`,
   },
-  unminted: {
+  gray: {
     hex: "$gray200",
     rgba: (alpha = 1) => `rgba(78, 78, 78, ${alpha})`,
   },
@@ -156,13 +160,13 @@ const LabelContent = styled("span", {
   textTransform: "capitalize",
 });
 
-const Label = ({ status }: { status: Status }) => {
-  const color = LabelColors[status]["hex"];
-  const backgroundColor = LabelColors[status]["rgba"](0.3);
+const Label = ({ color, content }: Label) => {
+  const textColor = LabelColors[color]["hex"];
+  const backgroundColor = LabelColors[color]["rgba"](0.3);
 
   return (
-    <LabelContainer css={{ color, backgroundColor }}>
-      <LabelContent css={{ color }}>{status}</LabelContent>
+    <LabelContainer css={{ color: textColor, backgroundColor }}>
+      <LabelContent css={{ color: textColor }}>{content}</LabelContent>
     </LabelContainer>
   );
 };
@@ -176,6 +180,7 @@ const TextWrapper = styled(Box, {
 const Title = styled("h2", {
   fontFamily: "$IBMPlexSans",
   fontWeight: "$bold",
+  textTransform: "capitalize",
 });
 
 const Content = styled("p", {
@@ -188,7 +193,7 @@ export default function ActivityCard({
   title,
   content,
   style,
-  status,
+  label,
 }: Props) {
   return (
     <Card style={style}>
@@ -199,7 +204,7 @@ export default function ActivityCard({
       </CardSpotlight>
       <TextWrapper>
         <Title>{title}</Title>
-        <Label status={status} />
+        {label && <Label {...label} />}
         <Content>{content}</Content>
       </TextWrapper>
     </Card>
