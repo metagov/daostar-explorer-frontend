@@ -1,5 +1,5 @@
 import govrnAbi from "~/lib/wallet/abis/govrn.json";
-import reputableAbi from "~/lib/wallet/abis/govrn.json";
+import reputableAbi from "~/lib/wallet/abis/reputable.json";
 
 const {
   API_URL,
@@ -15,10 +15,11 @@ const DEFAULT_GOVRN_NETWORK = "goerli";
 const DEFAULT_REPUTABLE_NETWORK = "sepolia";
 const DEFAULT_GOVRN_CONTRACT_ADDRESS =
   "0x44fa8E6588e7a9ad869837d09621Cc663539D753";
-const DEFAULT_REPUTABLE_CONTRACT_ADDRESS = "0x0";
+const DEFAULT_REPUTABLE_CONTRACT_ADDRESS =
+  "0xfEb6Cf237c031a2d6c97E8E415064A3d1126232A";
 const DEFAULT_API_URL = "http://localhost:4000";
 const DEFAULT_WALLET_POLLING_INTERVAL = 5000;
-const DEFAULT_REPUTABLE_SUBMISSION_ENABLED = false;
+const DEFAULT_REPUTABLE_SUBMISSION_ENABLED = true;
 
 const networkChainIds = {
   mainnet: 1,

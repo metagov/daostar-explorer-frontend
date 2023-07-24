@@ -6,6 +6,7 @@ export type ContributionInput = {
   description?: string;
   category?: string;
   dateOfEngagement: string;
+  proof?: string;
   external?: object;
 };
 

@@ -5,15 +5,18 @@ import Config from "~/lib/config";
 export type Integration = "govrn" | "reputable";
 
 import Govrn from "~/lib/wallet/govrn";
+import Reputable from "~/lib/wallet/reputable";
 
 export default class Wallet {
   private provider: BrowserProvider;
   public govrn: Govrn;
+  public reputable: Reputable;
 
   constructor() {
     if (typeof window !== "undefined" && window.ethereum) {
       this.provider = new BrowserProvider(window.ethereum);
       this.govrn = new Govrn(this.provider);
+      this.reputable = new Reputable(this.provider);
     }
   }
 

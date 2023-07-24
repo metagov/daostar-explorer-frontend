@@ -3,8 +3,8 @@ import {
   ContractTransactionReceipt,
   EventLog,
   toUtf8Bytes,
-  AbiCoder,
 } from "ethers";
+
 import type { BrowserProvider, TransactionReceipt } from "ethers";
 
 import Config from "~/lib/config";
