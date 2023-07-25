@@ -18,6 +18,9 @@ import ReputationCard from "~/components/shared/ReputationCard";
 import Box from "~/components/ui/Box";
 import { Regular, Title } from "~/components/ui/Typography";
 
+// TODO: Remove this, debug only
+const { REACT_APP_API_URL } = process.env;
+
 interface ProfileProps {
   address: string;
 }
@@ -134,6 +137,8 @@ export default function Profile(props: ProfileProps) {
   const [reputation, setReputation] = useState<Reputation[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [errors, setErrors] = useState<APIResponseError[] | null>();
+
+  console.log("REACT_APP_API_URL", REACT_APP_API_URL);
 
   useEffect(() => {
     const fetchData = async () => {
