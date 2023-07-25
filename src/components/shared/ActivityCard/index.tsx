@@ -181,11 +181,13 @@ const Title = styled("h2", {
   fontFamily: "$IBMPlexSans",
   fontWeight: "$bold",
   textTransform: "capitalize",
+  wordBreak: "break-word",
 });
 
 const Content = styled("p", {
   fontFamily: "$IBMPlexSans",
   fontSize: "$12",
+  wordBreak: "break-word",
 });
 
 export default function ActivityCard({
