@@ -2,6 +2,7 @@ import { ChangeEvent, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { useWallet } from "~/hooks/useWallet";
+import { Users } from "~/lib/wallet/reputable/users";
 
 import { createContribution, updateContribution } from "~/lib/api";
 import { toEpoch } from "~/lib/date";
@@ -57,12 +58,25 @@ const MintingLayout = () => (
   </CenteredLayout>
 );
 
+const DisabledLayout = () => (
+  <CenteredLayout>
+    <ContentLayout>
+      <Title>Submit Reputation Rating</Title>
+      <Large>
+        Unfortunately, you're not allowlisted to use this feature. Please reach
+        out to our team to give you access.
+      </Large>
+    </ContentLayout>
+  </CenteredLayout>
+);
+
 export default function NewReputation() {
   const [hasErrors, setHasErrors] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const [rating, setRating] = useState<string | null>();
   const [ethAddress, setEthAddress] = useState<string | null>();
+  const [ownerAddress, setOwnerAddress] = useState<string | null>();
   const wallet = useWallet();
   const router = useRouter();
 
@@ -104,7 +118,6 @@ export default function NewReputation() {
     await wallet.switchNetwork("reputable");
 
     // 2. Mint the reputation score
-    const ownerAddress = await wallet.getAddress();
     const { hash: reputableTxHash } = await wallet.reputable.adder(
       ethAddress,
       ownerAddress,
@@ -195,10 +208,22 @@ export default function NewReputation() {
     }
 
     // 6. Redirect to the rated user's page
-    router.push(`/${ethAddress}`);
+    router.push({
+      pathname: `/${ethAddress}`,
+      query: { fromMint: "1" },
+    });
 
     setIsFetching(false);
   };
+
+  useEffect(() => {
+    (async () => {
+      const address = await wallet.getAddress();
+      setOwnerAddress(address.toLowerCase());
+    })();
+  }, [wallet]);
+
+  if (ownerAddress && !Users[ownerAddress]) return <DisabledLayout />;
 
   if (isMinting) return <MintingLayout />;
 

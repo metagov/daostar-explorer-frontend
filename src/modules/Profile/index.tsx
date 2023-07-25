@@ -1,4 +1,5 @@
 import { NextPageContext } from "next";
+import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { useEffect, useState } from "react";
 import { isAddress } from "web3-validator";
@@ -16,7 +17,7 @@ import AddressSearch from "~/components/shared/AddressSearch";
 import ContributionCard from "~/components/shared/ContributionCard";
 import ReputationCard from "~/components/shared/ReputationCard";
 import Box from "~/components/ui/Box";
-import { Regular, Title } from "~/components/ui/Typography";
+import { Regular, Large, Title } from "~/components/ui/Typography";
 
 interface ProfileProps {
   address: string;
@@ -107,6 +108,28 @@ const Address = ({ address }: { address: string }) => (
   </p>
 );
 
+const MintingWarningLayout = styled(Box, {
+  display: "flex",
+  flexDirection: "row",
+  gap: "$16",
+  width: "fit-content",
+  alignItems: "center",
+  border: "1px solid $yellow",
+  backgroundColor: "rgba(248, 228, 65, 0.5)",
+  padding: "$16",
+  borderRadius: "$medium",
+});
+
+const MintingWarning = () => (
+  <MintingWarningLayout>
+    <Large>⚠️</Large>
+    <Regular css={{ color: "$gray400", fontWeight: "$bold" }}>
+      A reputation rating is being minted for this profile. It may take a few
+      minutes to update.
+    </Regular>
+  </MintingWarningLayout>
+);
+
 const CardListWrapper = styled(Box, {
   display: "flex",
   flexDirection: "row",
@@ -134,6 +157,8 @@ export default function Profile(props: ProfileProps) {
   const [reputation, setReputation] = useState<Reputation[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [errors, setErrors] = useState<APIResponseError[] | null>();
+  const router = useRouter();
+  const fromMint = router.query.fromMint === "1";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,6 +196,8 @@ export default function Profile(props: ProfileProps) {
       <LayoutContainer>
         <AddressSearch onSubmit={onSubmit} />
         <ContentContainer>
+          {fromMint && <MintingWarning />}
+
           <Address address={address} />
 
           <ReputationSection
