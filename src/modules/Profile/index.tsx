@@ -159,10 +159,17 @@ export default function Profile(props: ProfileProps) {
     }
   }, [address]);
 
+  const onSubmit = () => {
+    setIsFetching(true);
+
+    setContributions([]);
+    setReputation([]);
+  };
+
   return (
     <CenteredLayout>
       <LayoutContainer>
-        <AddressSearch />
+        <AddressSearch onSubmit={onSubmit} />
         <ContentContainer>
           <Address address={address} />
 

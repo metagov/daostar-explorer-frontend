@@ -6,6 +6,7 @@ interface Props {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
   disabled?: boolean;
+  error?: boolean;
 }
 
 const TextInputStyled = styled(
@@ -25,6 +26,18 @@ const TextInputStyled = styled(
     "&:focus": {
       border: "1px solid $gray100",
     },
+
+    variants: {
+      error: {
+        true: {
+          border: "1px solid $purple",
+
+          "&:focus": {
+            border: "1px solid $purple",
+          },
+        },
+      },
+    },
   },
   "TextInput",
 );
@@ -34,6 +47,7 @@ export default function TextInput({
   onChange,
   onKeyUp,
   disabled,
+  error,
 }: Props) {
   return (
     <TextInputStyled
@@ -42,6 +56,7 @@ export default function TextInput({
       onChange={onChange}
       onKeyUp={onKeyUp}
       disabled={disabled}
+      error={error}
     />
   );
 }
