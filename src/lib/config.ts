@@ -2,13 +2,13 @@ import govrnAbi from "~/lib/wallet/abis/govrn.json";
 import reputableAbi from "~/lib/wallet/abis/reputable.json";
 
 const {
-  API_URL,
-  GOVRN_NETWORK,
-  GOVRN_CONTRACT_ADDRESS,
-  REPUTABLE_NETWORK,
-  REPUTABLE_CONTRACT_ADDRESS,
-  WALLET_POLLING_INTERVAL,
-  REPUTABLE_SUBMISSION_ENABLED,
+  REACT_APP_API_URL,
+  REACT_APP_GOVRN_NETWORK,
+  REACT_APP_GOVRN_CONTRACT_ADDRESS,
+  REACT_APP_REPUTABLE_NETWORK,
+  REACT_APP_REPUTABLE_CONTRACT_ADDRESS,
+  REACT_APP_WALLET_POLLING_INTERVAL,
+  REACT_APP_REPUTABLE_SUBMISSION_ENABLED,
 } = process.env;
 
 const DEFAULT_GOVRN_NETWORK = "goerli";
@@ -55,30 +55,32 @@ export type ApplicationConfig = {
 };
 
 export const govrn: ContractConfig = {
-  network: networkChainIds[GOVRN_NETWORK || DEFAULT_GOVRN_NETWORK],
-  address: GOVRN_CONTRACT_ADDRESS || DEFAULT_GOVRN_CONTRACT_ADDRESS,
+  network: networkChainIds[REACT_APP_GOVRN_NETWORK || DEFAULT_GOVRN_NETWORK],
+  address: REACT_APP_GOVRN_CONTRACT_ADDRESS || DEFAULT_GOVRN_CONTRACT_ADDRESS,
   abi: JSON.stringify(govrnAbi),
 };
 
 export const reputable: ContractConfig = {
-  network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
-  address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
+  network:
+    networkChainIds[REACT_APP_REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
+  address:
+    REACT_APP_REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
   abi: JSON.stringify(reputableAbi),
 };
 
 export const api: APIConfig = {
-  url: API_URL || DEFAULT_API_URL,
+  url: REACT_APP_API_URL || DEFAULT_API_URL,
 };
 
 export const featureFlags: FeatureFlagsConfig = {
   reputableSubmissionEnabled:
-    REPUTABLE_SUBMISSION_ENABLED === "1" ||
+    REACT_APP_REPUTABLE_SUBMISSION_ENABLED === "1" ||
     DEFAULT_REPUTABLE_SUBMISSION_ENABLED,
 };
 
 export const wallet: WalletConfig = {
-  pollingInterval: WALLET_POLLING_INTERVAL
-    ? Number(WALLET_POLLING_INTERVAL)
+  pollingInterval: REACT_APP_WALLET_POLLING_INTERVAL
+    ? Number(REACT_APP_WALLET_POLLING_INTERVAL)
     : DEFAULT_WALLET_POLLING_INTERVAL,
 };
 
