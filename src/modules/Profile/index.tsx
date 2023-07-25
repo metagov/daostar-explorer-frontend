@@ -135,8 +135,6 @@ export default function Profile(props: ProfileProps) {
   const [isFetching, setIsFetching] = useState(true);
   const [errors, setErrors] = useState<APIResponseError[] | null>();
 
-  console.log("process.env", process.env);
-
   useEffect(() => {
     const fetchData = async () => {
       const { data, errors } = await getActivity(address);
