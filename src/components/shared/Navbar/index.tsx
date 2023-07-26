@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import { useRouter } from "next/router";
 
+import { useWallet } from "~/hooks/useWallet";
+
 import { styled } from "~/styles/stitches.config";
 
 import { featureFlags } from "~/lib/config";
@@ -14,6 +16,7 @@ import { ReactComponent as DaostarLogo } from "~/vectors/daostar.svg";
 interface NavbarLinkProps {
   href: string;
   children: ReactNode;
+  onClick?: () => void;
 }
 
 const NavbarRoot = styled(
@@ -56,17 +59,29 @@ const NavbarLinkStyled = styled(
   "NavbarLink",
 );
 
-const NavbarLink = ({ href, children }: NavbarLinkProps) => {
+const NavbarLink = ({ href, children, onClick }: NavbarLinkProps) => {
   const router = useRouter();
 
   return (
-    <NavbarLinkStyled active={router.asPath === href} href={href}>
+    <NavbarLinkStyled
+      active={router.asPath === href}
+      onClick={onClick}
+      href={href}
+    >
       {children}
     </NavbarLinkStyled>
   );
 };
 
 export default function Navbar() {
+  const wallet = useWallet();
+  const router = useRouter();
+
+  const onProfileClick = async () => {
+    const address = await wallet.getAddress();
+    router.push(`/${address}`);
+  };
+
   return (
     <NavbarRoot>
       <NavbarSection>
@@ -78,6 +93,9 @@ export default function Navbar() {
       </NavbarSection>
 
       <NavbarSection>
+        <NavbarLink onClick={onProfileClick} href="#">
+          <Regular>My Profile</Regular>
+        </NavbarLink>
         <NavbarLink href="/contributions/new">
           <Regular>Submit Contribution</Regular>
         </NavbarLink>
