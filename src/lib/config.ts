@@ -15,8 +15,6 @@ const DEFAULT_GOVRN_NETWORK = "goerli";
 const DEFAULT_REPUTABLE_NETWORK = "goerli";
 const DEFAULT_GOVRN_CONTRACT_ADDRESS =
   "0x44fa8E6588e7a9ad869837d09621Cc663539D753";
-// const DEFAULT_REPUTABLE_CONTRACT_ADDRESS =
-//   "0xfEb6Cf237c031a2d6c97E8E415064A3d1126232A";
 const DEFAULT_REPUTABLE_CONTRACT_ADDRESS =
   "0xDafdC2Ae8ceEB8c4F70c8010Bcd7aD6853CeF532";
 const DEFAULT_API_URL = "https://daostar-explorer-api.gigalixirapp.com";
@@ -40,6 +38,11 @@ export type APIConfig = {
   url: string;
 };
 
+export type IntegrationConfig = {
+  api: APIConfig;
+  contract: ContractConfig;
+};
+
 export type WalletConfig = {
   pollingInterval: number;
 };
@@ -49,23 +52,33 @@ export type FeatureFlagsConfig = {
 };
 
 export type ApplicationConfig = {
-  govrn: ContractConfig;
-  reputable: ContractConfig;
+  govrn: IntegrationConfig;
+  reputable: IntegrationConfig;
   api: APIConfig;
   wallet: WalletConfig;
   featureFlags: FeatureFlagsConfig;
 };
 
-export const govrn: ContractConfig = {
-  network: networkChainIds[GOVRN_NETWORK || DEFAULT_GOVRN_NETWORK],
-  address: GOVRN_CONTRACT_ADDRESS || DEFAULT_GOVRN_CONTRACT_ADDRESS,
-  abi: JSON.stringify(govrnAbi),
+export const govrn: IntegrationConfig = {
+  api: {
+    url: "https://voyager-identity-api-staging.govrn.app/api",
+  },
+  contract: {
+    network: networkChainIds[GOVRN_NETWORK || DEFAULT_GOVRN_NETWORK],
+    address: GOVRN_CONTRACT_ADDRESS || DEFAULT_GOVRN_CONTRACT_ADDRESS,
+    abi: JSON.stringify(govrnAbi),
+  },
 };
 
-export const reputable: ContractConfig = {
-  network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
-  address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
-  abi: JSON.stringify(reputableAbi),
+export const reputable: IntegrationConfig = {
+  api: {
+    url: "https://reputable-swagger-api.onrender.com/",
+  },
+  contract: {
+    network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
+    address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
+    abi: JSON.stringify(reputableAbi),
+  },
 };
 
 export const api: APIConfig = {

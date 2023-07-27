@@ -27,4 +27,3 @@ export type Reputation = {
   proof: string;
   expiration: string;
 };
-

@@ -2,7 +2,7 @@ import { Contract, ContractTransactionReceipt } from "ethers";
 
 import type { BrowserProvider, TransactionReceipt } from "ethers";
 
-import Config from "~/lib/config";
+import { reputable } from "~/lib/config";
 import { toEpoch } from "~/lib/date";
 import { Users } from "~/lib/wallet/reputable/users";
 
@@ -42,7 +42,7 @@ export default class Reputable {
   }
 
   async _instantiateContract() {
-    const { address, abi } = Config.reputable;
+    const { address, abi } = reputable.contract;
     const signer = await this.provider.getSigner();
     return new Contract(address, abi, signer);
   }

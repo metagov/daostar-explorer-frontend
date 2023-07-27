@@ -14,7 +14,7 @@ export default function ReputationCard({
   const content = `Aggregate Reputation Score: ${score}`;
   const seed = BigInt(id);
   const now = new Date();
-  const isExpired = toEpoch(now) - toEpoch(expiration) > 0;
+  const isExpired = expiration ? toEpoch(now) - toEpoch(expiration) > 0 : false;
 
   const label = isExpired
     ? { color: "gray" as LabelColor, content: "expired" }

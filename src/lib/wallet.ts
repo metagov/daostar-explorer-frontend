@@ -33,7 +33,7 @@ export default class Wallet {
   async switchNetwork(integration: Integration) {
     const currentNetwork = await this.provider.getNetwork();
     const currentChainId = Number(currentNetwork.chainId);
-    const { network } = Config[integration];
+    const { network } = Config[integration].contract;
 
     if (network === currentChainId) return;
 

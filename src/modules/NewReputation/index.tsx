@@ -4,7 +4,11 @@ import { useRouter } from "next/router";
 import { useWallet } from "~/hooks/useWallet";
 import { Users } from "~/lib/wallet/reputable/users";
 
-import { createContribution, updateContribution } from "~/lib/api";
+import {
+  createContribution,
+  updateContribution,
+  postReputationScore,
+} from "~/lib/api";
 import { toEpoch } from "~/lib/date";
 
 import { styled } from "~/styles/stitches.config";
@@ -84,7 +88,7 @@ export default function NewReputation() {
     event: ChangeEvent<HTMLInputElement>,
     error: string,
   ) => {
-    !!error ? setRating(null) : setRating(event.target.value);
+    error ? setRating(null) : setRating(event.target.value);
   };
 
   const onEthAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +129,10 @@ export default function NewReputation() {
     );
 
     setIsMinting(true);
+
+    await wallet.watchTransaction(reputableTxHash);
+
+    await postReputationScore(ethAddress);
 
     //
     // Govrn minting

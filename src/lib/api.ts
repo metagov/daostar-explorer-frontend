@@ -1,5 +1,7 @@
-import { api } from "~/lib/config";
+import { api, reputable } from "~/lib/config";
 import { get, post, put } from "~/lib/client";
+
+import { Users } from "~/lib/wallet/reputable/users";
 
 export type ContributionInput = {
   title: string;
@@ -45,4 +47,10 @@ export const updateContribution = (
       issuer_uid: params.issuerUid,
     },
   });
+};
+
+export const postReputationScore = (ethAddress: string) => {
+  const sellerId = Users[ethAddress.toLowerCase()];
+  const reputableApi = reputable.api.url;
+  return post(`${reputableApi}/reputation_score`, { sellerId });
 };

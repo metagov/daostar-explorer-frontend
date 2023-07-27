@@ -7,7 +7,7 @@ import {
 
 import type { BrowserProvider, TransactionReceipt } from "ethers";
 
-import Config from "~/lib/config";
+import { govrn } from "~/lib/config";
 
 export default class Govrn {
   private provider: BrowserProvider;
@@ -60,7 +60,7 @@ export default class Govrn {
   }
 
   async _instantiateContract() {
-    const { address, abi } = Config.govrn;
+    const { address, abi } = govrn.contract;
     const signer = await this.provider.getSigner();
     return new Contract(address, abi, signer);
   }
