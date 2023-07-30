@@ -1,6 +1,6 @@
 import { BrowserProvider, TransactionReceipt } from "ethers";
 
-import Config from "~/lib/config";
+import Config, { wallet } from "~/lib/config";
 
 export type Integration = "govrn" | "reputable";
 
@@ -64,7 +64,7 @@ export default class Wallet {
         } else {
           setTimeout(() => {
             this._watchTransaction(txHash, resolve, reject);
-          }, Config.wallet.pollingInterval);
+          }, wallet.pollingInterval);
         }
       })
       .catch(reject);
