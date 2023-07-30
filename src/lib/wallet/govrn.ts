@@ -60,7 +60,7 @@ export default class Govrn {
   }
 
   async _instantiateContract() {
-    const { address, abi } = govrn.contract;
+    const { address, abi } = govrn;
     const signer = await this.provider.getSigner();
     return new Contract(address, abi, signer);
   }

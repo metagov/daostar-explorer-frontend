@@ -42,7 +42,7 @@ export default class Reputable {
   }
 
   async _instantiateContract() {
-    const { address, abi } = reputable.contract;
+    const { address, abi } = reputable;
     const signer = await this.provider.getSigner();
     return new Contract(address, abi, signer);
   }

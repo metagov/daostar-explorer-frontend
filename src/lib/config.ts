@@ -38,11 +38,6 @@ export type APIConfig = {
   url: string;
 };
 
-export type IntegrationConfig = {
-  api: APIConfig;
-  contract: ContractConfig;
-};
-
 export type WalletConfig = {
   pollingInterval: number;
 };
@@ -52,33 +47,23 @@ export type FeatureFlagsConfig = {
 };
 
 export type ApplicationConfig = {
-  govrn: IntegrationConfig;
-  reputable: IntegrationConfig;
+  govrn: ContractConfig;
+  reputable: ContractConfig;
   api: APIConfig;
   wallet: WalletConfig;
   featureFlags: FeatureFlagsConfig;
 };
 
-export const govrn: IntegrationConfig = {
-  api: {
-    url: "https://voyager-identity-api-staging.govrn.app/api",
-  },
-  contract: {
-    network: networkChainIds[GOVRN_NETWORK || DEFAULT_GOVRN_NETWORK],
-    address: GOVRN_CONTRACT_ADDRESS || DEFAULT_GOVRN_CONTRACT_ADDRESS,
-    abi: JSON.stringify(govrnAbi),
-  },
+export const govrn: ContractConfig = {
+  network: networkChainIds[GOVRN_NETWORK || DEFAULT_GOVRN_NETWORK],
+  address: GOVRN_CONTRACT_ADDRESS || DEFAULT_GOVRN_CONTRACT_ADDRESS,
+  abi: JSON.stringify(govrnAbi),
 };
 
-export const reputable: IntegrationConfig = {
-  api: {
-    url: "https://reputable-swagger-api.onrender.com/",
-  },
-  contract: {
-    network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
-    address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
-    abi: JSON.stringify(reputableAbi),
-  },
+export const reputable: ContractConfig = {
+  network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
+  address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
+  abi: JSON.stringify(reputableAbi),
 };
 
 export const api: APIConfig = {

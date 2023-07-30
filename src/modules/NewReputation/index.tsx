@@ -132,8 +132,6 @@ export default function NewReputation() {
 
     await wallet.watchTransaction(reputableTxHash);
 
-    await postReputationScore(ethAddress);
-
     //
     // Govrn minting
     //
