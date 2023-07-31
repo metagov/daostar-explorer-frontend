@@ -5,7 +5,11 @@ import { useRouter } from "next/router";
 import { useWallet } from "~/hooks/useWallet";
 import { Users } from "~/lib/wallet/reputable/users";
 
-import { createContribution, updateContribution } from "~/lib/api";
+import {
+  createContribution,
+  updateContribution,
+  postReputationScore,
+} from "~/lib/api";
 import { toEpoch } from "~/lib/date";
 
 import { styled } from "~/styles/stitches.config";
@@ -127,8 +131,10 @@ export default function NewReputation() {
 
     setIsMinting(true);
 
+    // Sync steps, to be taken in order
     await wallet.watchTransaction(reputableTxHash);
     await waitForScoreAddedEvent(ethAddress);
+    await postReputationScore(ethAddress);
 
     //
     // Govrn minting

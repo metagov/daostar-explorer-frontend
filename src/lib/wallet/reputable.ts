@@ -37,19 +37,19 @@ export default class Reputable {
     );
   }
 
-  async _listenToScoreAdded(sellerId: number) {
+  async waitForScoreAdded(ethAddress: string) {
     await this._maybeInstantiateContract();
 
-    this.contract.on("ScoreAdded", (event) => {
-      console.log(event.eventName, event.args, event.log);
-      if (event.args.sellerId === sellerId) {
-        event.removeListener();
-        return true;
-      }
+    return new Promise<void>((resolve) => {
+      const sellerId = Users[ethAddress.toLowerCase()];
+
+      this.contract.on("ScoreAdded", (event) => {
+        if (event.args.sellerId === sellerId) {
+          event.removeListener();
+          resolve();
+        }
+      });
     });
-    await timeout(300000); // Wait for 5 minutes (300,000 milliseconds)
-    this.contract.off("ScoreAdded");
-    return false;
   }
 
   async _maybeInstantiateContract() {
