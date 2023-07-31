@@ -21,7 +21,8 @@ const DEFAULT_REPUTABLE_CONTRACT_ADDRESS =
 const DEFAULT_API_URL = "https://daostar-explorer-api.gigalixirapp.com";
 const DEFAULT_WALLET_POLLING_INTERVAL = 5000;
 const DEFAULT_REPUTABLE_SUBMISSION_ENABLED = true;
-const DEFAULT_REPUTABLE_API_INTERFACE = "https://reputable-swagger-api.onrender.com";
+const DEFAULT_REPUTABLE_API_INTERFACE =
+  "https://reputable-swagger-api.onrender.com";
 
 const networkChainIds = {
   mainnet: 1,
