@@ -131,7 +131,7 @@ export default function NewReputation() {
     setIsMinting(true);
 
     // Sync steps, to be taken in order
-    await wallet.watchTransaction(reputableTxHash);
+    //await wallet.watchTransaction(reputableTxHash);
     await wallet.reputable.waitForScoreAdded(ethAddress);
     await postReputationScore(ethAddress);
 
