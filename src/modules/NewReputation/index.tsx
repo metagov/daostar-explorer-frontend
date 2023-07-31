@@ -21,7 +21,6 @@ import Link from "~/components/ui/Link";
 import NumberInput from "~/components/ui/NumberInput";
 import TextInput from "~/components/ui/TextInput";
 import { Regular, Large, Title } from "~/components/ui/Typography";
-import waitForScoreAddedEvent from "~/lib/waitForScoreAddedEvent";
 const ContentLayout = styled("div", {
   display: "flex",
   flexDirection: "column",
