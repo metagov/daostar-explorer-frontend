@@ -53,5 +53,4 @@ async function detectContractCalls(ethAddress: string) {
   }
 }
 
-// Call the function with the specific seller ID you want to filter
 export default detectContractCalls;
