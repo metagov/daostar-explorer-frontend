@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 set -e
-./bin/functions
+source "./bin/functions"
 
 env=${1:-"development"}
 

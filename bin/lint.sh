@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 set -e
-./bin/functions
+source "./bin/functions"
 
 pp_info "lint" "running the linter"
 yarn lint
