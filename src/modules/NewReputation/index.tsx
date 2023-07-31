@@ -132,7 +132,7 @@ export default function NewReputation() {
 
     // Sync steps, to be taken in order
     await wallet.watchTransaction(reputableTxHash);
-    await waitForScoreAddedEvent(ethAddress);
+    await wallet.reputable.waitForScoreAdded(ethAddress);
     await postReputationScore(ethAddress);
 
     //

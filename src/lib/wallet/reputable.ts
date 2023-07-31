@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Contract, ContractTransactionReceipt } from "ethers";
-import { timeout, toEpoch } from "~/lib/date";
+import { toEpoch } from "~/lib/date";
 import type { BrowserProvider, TransactionReceipt } from "ethers";
 
 import { reputable } from "~/lib/config";
