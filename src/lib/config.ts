@@ -2,6 +2,7 @@ import govrnAbi from "~/lib/wallet/abis/govrn.json";
 import reputableAbi from "~/lib/wallet/abis/reputable.json";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const REPUTABLE_API_INTERFACE = process.env.NEXT_PUBLIC_REPUTABLE_API_INTERFACE;
 const GOVRN_NETWORK = process.env.NEXT_PUBLIC_GOVRN_NETWORK;
 const GOVRN_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_GOVRN_CONTRACT_ADDRESS;
 const REPUTABLE_NETWORK = process.env.NEXT_PUBLIC_REPUTABLE_NETWORK;
@@ -20,7 +21,7 @@ const DEFAULT_REPUTABLE_CONTRACT_ADDRESS =
 const DEFAULT_API_URL = "https://daostar-explorer-api.gigalixirapp.com";
 const DEFAULT_WALLET_POLLING_INTERVAL = 5000;
 const DEFAULT_REPUTABLE_SUBMISSION_ENABLED = true;
-const REPUTABLE_API_INTERFACE = "https://reputable-swagger-api.onrender.com";
+const DEFAULT_REPUTABLE_API_INTERFACE = "https://reputable-swagger-api.onrender.com";
 
 const networkChainIds = {
   mainnet: 1,
@@ -66,7 +67,7 @@ export const reputable: ContractConfig = {
   network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
   address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
   abi: JSON.stringify(reputableAbi),
-  api: { url: REPUTABLE_API_INTERFACE },
+  api: { url: REPUTABLE_API_INTERFACE || DEFAULT_REPUTABLE_API_INTERFACE },
 };
 
 export const api: APIConfig = {
