@@ -17,8 +17,7 @@ import Link from "~/components/ui/Link";
 import NumberInput from "~/components/ui/NumberInput";
 import TextInput from "~/components/ui/TextInput";
 import { Regular, Large, Title } from "~/components/ui/Typography";
-import detectContractCalls from "~/lib/detectEvent";
-
+import waitForScoreAddedEvent from "~/lib/waitForScoreAddedEvent";
 const ContentLayout = styled("div", {
   display: "flex",
   flexDirection: "column",
@@ -129,7 +128,7 @@ export default function NewReputation() {
     setIsMinting(true);
 
     await wallet.watchTransaction(reputableTxHash);
-    detectContractCalls(ethAddress);
+    await waitForScoreAddedEvent(ethAddress);
 
     //
     // Govrn minting
