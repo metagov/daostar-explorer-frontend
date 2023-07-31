@@ -20,6 +20,7 @@ const DEFAULT_REPUTABLE_CONTRACT_ADDRESS =
 const DEFAULT_API_URL = "https://daostar-explorer-api.gigalixirapp.com";
 const DEFAULT_WALLET_POLLING_INTERVAL = 5000;
 const DEFAULT_REPUTABLE_SUBMISSION_ENABLED = true;
+const REPUTABLE_API_INTERFACE = "https://reputable-swagger-api.onrender.com";
 
 const networkChainIds = {
   mainnet: 1,
@@ -32,6 +33,7 @@ export type ContractConfig = {
   network: number;
   address: string;
   abi: string;
+  api?: { url: string };
 };
 
 export type APIConfig = {
@@ -64,6 +66,7 @@ export const reputable: ContractConfig = {
   network: networkChainIds[REPUTABLE_NETWORK || DEFAULT_REPUTABLE_NETWORK],
   address: REPUTABLE_CONTRACT_ADDRESS || DEFAULT_REPUTABLE_CONTRACT_ADDRESS,
   abi: JSON.stringify(reputableAbi),
+  api: { url: REPUTABLE_API_INTERFACE },
 };
 
 export const api: APIConfig = {

@@ -1,14 +1,11 @@
+/* eslint-disable no-console */
 import { ChangeEvent, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { useWallet } from "~/hooks/useWallet";
 import { Users } from "~/lib/wallet/reputable/users";
 
-import {
-  createContribution,
-  updateContribution,
-  postReputationScore,
-} from "~/lib/api";
+import { createContribution, updateContribution } from "~/lib/api";
 import { toEpoch } from "~/lib/date";
 
 import { styled } from "~/styles/stitches.config";
@@ -20,6 +17,7 @@ import Link from "~/components/ui/Link";
 import NumberInput from "~/components/ui/NumberInput";
 import TextInput from "~/components/ui/TextInput";
 import { Regular, Large, Title } from "~/components/ui/Typography";
+import detectContractCalls from "~/lib/detectEvent";
 
 const ContentLayout = styled("div", {
   display: "flex",
@@ -131,6 +129,7 @@ export default function NewReputation() {
     setIsMinting(true);
 
     await wallet.watchTransaction(reputableTxHash);
+    detectContractCalls(ethAddress);
 
     //
     // Govrn minting
