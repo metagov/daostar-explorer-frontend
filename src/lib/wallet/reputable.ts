@@ -33,13 +33,13 @@ export default class Reputable {
     return new ContractTransactionReceipt(
       this.contract.interface,
       this.provider,
-      receipt,
+      receipt
     );
   }
 
   async waitForScoreAdded(ethAddress: string) {
     await this._maybeInstantiateContract();
-
+    console.log("listening to ScoreAdded");
     return new Promise<void>((resolve) => {
       const sellerId = Users[ethAddress.toLowerCase()];
 
