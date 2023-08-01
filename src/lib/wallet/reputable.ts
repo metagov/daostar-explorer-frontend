@@ -44,7 +44,9 @@ export default class Reputable {
       const sellerId = Users[ethAddress.toLowerCase()];
 
       this.contract.on("ScoreAdded", (event) => {
+        console.log(event);
         if (event.args.sellerId === sellerId) {
+          console.log("seller match");
           event.removeListener();
           resolve();
         }
